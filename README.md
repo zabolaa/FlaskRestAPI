@@ -8,4 +8,5 @@ tbd
 
 ```shell
 docker build -t e-commerce-flask-app .
+docker run -d -p 5001:5000 e-commerce-flask
 ```
