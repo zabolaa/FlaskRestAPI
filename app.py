@@ -1,41 +1,20 @@
-from unittest import skip
-
 from flask import Flask, request
+from flask_smorest import Api
 import uuid
 from db import shops, products
+from resources.shop import blueprint as ShopBlueprint
+
 
 
 app = Flask(__name__)
+app.config["PROPAGATE_EXCEPTIONS"] = True
+app.config["API_TITLE"] = "Shop REST API"
+app.config["API_VERSION"] = "v1"
+app.config["OPENAPI_VERSION"] = "3.0.3"
+app.config["OPENAPI_URL_PREFIX"] = "/"
+app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui/"
+app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
-temp_shops = [{"name": "reserved", "products": [{"name": "T-shirt", "price": 35}]}]
-
-@app.route("/shop")
-def get_shops():
-    return {"shops": list(shops.values())}
-
-@app.route("/shop/<shop_id>")
-def get_shop(shop_id):
-    try:
-        return shops[shop_id]
-    except KeyError:
-        return {"message":"Shop not found"}, 404
-
-@app.route("/shop", methods=["POST"])
-def create_shop():
-    shop_data =request.json
-    shop_id = uuid.uuid4().hex
-    shop = {**shop_data, "id": shop_id}
-    shops[shop_id] = shop
-    return shop
-
-
-@app.route("/shop/<shop_id>", methods=["DELETE"])
-def delete_shop(shop_id):
-    try:
-        del shops[shop_id]
-        return {"message":"Shop deleted"}
-    except KeyError:
-        return {"message":"Shop not found"}, 404
 
 @app.route("/product", methods=["POST"])
 def create_product():
@@ -80,7 +59,5 @@ def delete_product(product_id):
     except KeyError:
         return {"message":"Product not found"}, 404
 
-
-
-
-app.run()
+api = Api(app)
+api.register_blueprint(ShopBlueprint)
