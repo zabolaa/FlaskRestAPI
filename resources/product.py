@@ -39,7 +39,7 @@ class ProductList(MethodView):
     @blueprint.response(200, ProductSchema(many=True))
 
     def get(self):
-        return list(products.values())}
+        return list(products.values())
 
 
     @blueprint.arguments(ProductSchema)
