@@ -1,5 +1,6 @@
 from flask import request
 import uuid
+from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
@@ -12,12 +13,14 @@ blueprint = Blueprint("shops", __name__, description="Operations on Shops")
 
 @blueprint.route("/shop/<shop_id>")
 class Shop(MethodView):
+    @jwt_required()
     @blueprint.response(200, ShopSchema)
     def get(self, shop_id):
         shop = ShopModel.query.get_or_404(shop_id)
         return shop
 
 
+    @jwt_required()
     def delete(self, shop_id):
         shop = ShopModel.query.get_or_404(shop_id)
         db.session.delete(shop)
@@ -26,10 +29,14 @@ class Shop(MethodView):
 
 @blueprint.route("/shop")
 class ShopList(MethodView):
+
+    @jwt_required()
     @blueprint.response(200, ShopSchema(many=True))
     def get(self):
         return ShopModel.query.all()
 
+
+    @jwt_required()
     @blueprint.arguments(ShopSchema)
     @blueprint.response(201, ShopSchema)
     def post(self, shop_data):

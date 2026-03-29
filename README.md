@@ -35,11 +35,17 @@ pip install -r requirements.txt
 ### Build docker image
 
 ```shell
-docker build -t e-commerce-flask-app .
+docker build -t e-commerce-flask .
 ```
 
 ### Run docker container
 
 ```shell
-docker run -d -p 5001:5000 e-commerce-flask
+docker run -d -p 5050:5000 e-commerce-flask
+```
+
+### Run container with local files mounted
+
+```shell
+docker run -d -p 5050:5000 -v "$(pwd):/app" e-commerce-flask
 ```
