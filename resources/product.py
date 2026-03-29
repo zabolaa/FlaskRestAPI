@@ -1,9 +1,11 @@
 from flask import request
 import uuid
+from sqlalchemy.exc import SQLAlchemyError
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from db import products
+from db import db
 from schemas import ProductSchema, ProductUpdateSchema
+from models import ProductModel
 
 
 blueprint = Blueprint("products", __name__, description="Operations on products")
@@ -12,48 +14,51 @@ blueprint = Blueprint("products", __name__, description="Operations on products"
 class Product(MethodView):
     @blueprint.response(200, ProductSchema)
     def get(self, product_id):
-        try:
-            return products[product_id]
-        except KeyError:
-            abort(404, message="Product nod found")
+        product = ProductModel.query.get_or_404(product_id)
+        return product
 
     @blueprint.arguments(ProductUpdateSchema)
     @blueprint.response(200, ProductSchema)
     def put(self, product_data, product_id):
+        product = ProductModel.query.get_or_404(product_id)
+        if product:
+            product.price = product_data["price"]
+            product.name = product_data["name"]
+        else:
+            product = ProductModel(id=product_id, **product_data)
         try:
-            product = products[product_id]
-            product |= product_data
-            return product
-        except KeyError:
-            abort(404, message="Product nod found")
+            db.session.add(product)
+            db.session.commit()
+        except SQLAlchemyError:
+            abort(500, message="Error while updating the product")
+        return product
+
 
     def delete(self, product_id):
-        try:
-            del products[product_id]
-            return {"message": "Product deleted"}
-        except KeyError:
-            abort(404, message="Product nod found")
+        product = ProductModel.query.get_or_404(product_id)
+        db.session.delete(product)
+        db.session.commit()
+
+        return {"message": "Product deleted successfully"}
+
 
 @blueprint.route("/product")
 class ProductList(MethodView):
     @blueprint.response(200, ProductSchema(many=True))
 
     def get(self):
-        return list(products.values())
+        return ProductModel.query.all()
 
 
     @blueprint.arguments(ProductSchema)
     @blueprint.response(201, ProductSchema)
     def post(self, new_product):
-        new_product = request.json
+        product = ProductModel(**new_product)
 
-        for product in products.values():
-            if (new_product["name"] == product["name"]
-                and new_product["shop_id"] == product["shop_id"]):
-                abort(400, message="Product already exists")
 
-        product_id = uuid.uuid4().hex
-        product = {**new_product, "id": product_id}
-        products[product_id] = product
-
+        try:
+            db.session.add(product)
+            db.session.commit()
+        except  SQLAlchemyError:
+            abort(500, message="An error occured while inserting the product")
         return product
