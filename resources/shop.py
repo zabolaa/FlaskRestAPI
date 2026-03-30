@@ -47,6 +47,6 @@ class ShopList(MethodView):
         except IntegrityError:
             abort(400, message="Shop already exists")
         except  SQLAlchemyError:
-            abort(500, message="An error occured while inserting the shop")
+            abort(500, message="An error occurred while inserting the shop")
 
         return shop
