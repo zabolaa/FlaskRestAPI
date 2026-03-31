@@ -1,8 +1,2 @@
 .venv/
 .gitignore
-front-end
-venv
-env/
-*.pyc
-__pycache__/
-instance/
