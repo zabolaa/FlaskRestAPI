@@ -18,7 +18,7 @@ const Register = () => {
     try {
       await auth.register(formData.username, formData.password);
       setErrorMessage("");
-      navigate("/login", { replace: true });
+      navigate("/signin", { replace: true });
     } catch (error) {
       if (error.response && error.response.status === 409) {
         setErrorMessage(error.response.data.message);
@@ -350,7 +350,7 @@ const Register = () => {
           <div className="register-divider" />
 
           <p className="register-login-link">
-            Already have an account? <Link to="/login">Sign in</Link>
+            Already have an account? <Link to="/signin">Sign in</Link>
           </p>
         </div>
       </div>

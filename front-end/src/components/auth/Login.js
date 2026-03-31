@@ -340,7 +340,7 @@ const LoginPage = () => {
           <div className="login-divider" />
 
           <p className="login-register">
-            Don't have an account? <Link to="/register">Create one</Link>
+            Don't have an account? <Link to="/signup">Create one</Link>
           </p>
         </div>
       </div>
