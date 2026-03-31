@@ -8,8 +8,10 @@ from resources.product import blueprint as ProductBlueprint
 from resources.user import blueprint as UserBlueprint
 from db import db
 from blacklist import BLACKLIST
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=['http://localhost:3000'], supports_credentials=True)
 
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config["API_TITLE"] = "Shop REST API"

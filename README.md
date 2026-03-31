@@ -49,3 +49,16 @@ docker run -d -p 5050:5000 e-commerce-flask
 ```shell
 docker run -d -p 5050:5000 -v "$(pwd):/app" e-commerce-flask
 ```
+
+---
+
+## Notes
+
+### If node is not found on your machine this might help
+
+```shell
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \ 
+  && printf %s "${HOME}/.nvm" \ 
+  || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] \
+  && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm, without auto-using the default version
+```
