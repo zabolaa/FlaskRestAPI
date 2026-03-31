@@ -5,5 +5,5 @@ COPY ./requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-EXPOSE 5000
+EXPOSE 80
 CMD ["/bin/bash", "docker-entrypoint.sh"]
