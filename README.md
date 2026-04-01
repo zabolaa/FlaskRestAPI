@@ -20,7 +20,7 @@ The API provides endpoints for:
 - 🏪 Store management (create, view, delete)
 - 📦 Product management (add, list, delete)
 - 🧾 RESTful API design
-- 🐳 Docker support for easy deployment
+- 🐳 Docker support for easy 
 
 ---
 
