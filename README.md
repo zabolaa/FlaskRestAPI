@@ -1,9 +1,53 @@
 # REST API server written in Python on Flask
 
-## How to start
+## Project Overview
 
-tbd
+This project is a REST API for a simple e-commerce system built with Flask.  
+It allows users to register, authenticate, and manage their own stores and products.
 
+The API provides endpoints for:
+- User registration and authentication (login)
+- Creating and managing stores
+- Adding, listing, and deleting products within stores
+
+🔗 Live demo: https://flaskrestapi-ui.onrender.com/
+
+---
+
+## Features
+
+- 🔐 User authentication (register & login)
+- 🏪 Store management (create, view, delete)
+- 📦 Product management (add, list, delete)
+- 🧾 RESTful API design
+- 🐳 Docker support for easy deployment
+
+---
+
+## How it works
+
+1. A user registers an account
+2. The user logs in and receives authentication credentials (e.g., token/session)
+3. The authenticated user can:
+   - Create a store
+   - Add products to the store
+   - View products
+   - Delete products or stores
+
+The API follows REST principles and communicates using JSON.
+
+---
+
+## Example API Flow
+
+1. Register user
+2. Login user
+3. Create store
+4. Add product to store
+5. Retrieve product list
+6. Delete product
+
+---
 
 ## Dependencies
 
