@@ -96,6 +96,19 @@ docker run -d -p 5050:80 -v "$(pwd):/app" e-commerce-flask
 
 ---
 
+### Basic terminal navigation
+```shell
+pwd → show current working directory
+
+cd folder → enter a folder
+
+cd .. → go one level up
+
+cd - → go back to the previous directory
+
+cd ~ → go to home directory
+```
+
 ## Notes
 
 ### If node is not found on your machine this might help
@@ -106,3 +119,4 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
   || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] \
   && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm, without auto-using the default version
 ```
+
